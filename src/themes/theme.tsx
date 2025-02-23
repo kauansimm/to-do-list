@@ -88,7 +88,7 @@ const theme = createTheme({
           fontWeight:
             ownerState?.component === 'strong'
               ? ThemeSettings.THEME_FONT_WEIGHTS.bold
-              : ThemeSettings.THEME_FONT_WEIGHTS.extraLight,
+              : ThemeSettings.THEME_FONT_WEIGHTS.light,
           '@media (max-width: 1535px)': {
             fontSize: ThemeSettings.THEME_FONT_SIZES.title01_small,
           },
@@ -115,7 +115,7 @@ const theme = createTheme({
           fontWeight:
             ownerState?.component === 'strong'
               ? ThemeSettings.THEME_FONT_WEIGHTS.bold
-              : ThemeSettings.THEME_FONT_WEIGHTS.extraLight,
+              : ThemeSettings.THEME_FONT_WEIGHTS.light,
         }),
         h3: ({ ownerState }) => ({
           ...(ownerState?.variant === 'h3' && {
@@ -133,7 +133,7 @@ const theme = createTheme({
             fontWeight:
               ownerState?.component === 'strong'
                 ? ThemeSettings.THEME_FONT_WEIGHTS.bold
-                : ThemeSettings.THEME_FONT_WEIGHTS.extraLight,
+                : ThemeSettings.THEME_FONT_WEIGHTS.light,
           }),
         }),
         h4: ({ ownerState }) => ({
@@ -148,7 +148,7 @@ const theme = createTheme({
             fontWeight:
               ownerState?.component === 'strong'
                 ? ThemeSettings.THEME_FONT_WEIGHTS.bold
-                : ThemeSettings.THEME_FONT_WEIGHTS.extraLight,
+                : ThemeSettings.THEME_FONT_WEIGHTS.light,
 
           }),
         }),
@@ -160,7 +160,7 @@ const theme = createTheme({
           fontWeight:
             ownerState?.component === 'strong'
               ? ThemeSettings.THEME_FONT_WEIGHTS.bold
-              : ThemeSettings.THEME_FONT_WEIGHTS.extraLight,
+              : ThemeSettings.THEME_FONT_WEIGHTS.light,
           '@media (max-width: 1535px)': {
             fontSize: ThemeSettings.THEME_FONT_SIZES.body01_small,
           },

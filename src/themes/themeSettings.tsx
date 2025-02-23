@@ -6,7 +6,7 @@ class ThemeSettings {
       background: '#EEEEEE',
       black: '#222322',
       white: '#FFFFF6',
-      gray: '#D9D9D9'
+      gray: '#dedede'
     };
   
     static readonly THEME_FONTS = {

@@ -1,12 +1,12 @@
 const pages = import.meta.glob('../pages/**/page.tsx', { eager: true });
 
 const routesconfig = Object.keys(pages).map((path) => {
-  const match = path.match(/\/pages\/(.*?)\/page.tsx/); // Extrai o nome da pasta
-  const routePath = match ? `/${match[1]}` : '/'; // Define a rota a partir da pasta
+  const match = path.match(/\/pages\/(.*?)\/page.tsx/);
+  const routePath = match ? `/${match[1]}` : '/';
 
   return {
-    path: routePath.toLowerCase(), // Ex: /cadastro, /dashboard, /home
-    component: (pages[path] as any).default, // Importa o componente
+    path: routePath.toLowerCase(),
+    component: (pages[path] as any).default,
   };
 });
 

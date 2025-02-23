@@ -5,8 +5,11 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useLocation } from "react-router-dom";
 
+interface NavBarI {
+    loginFunction?: () => void
+}
 
-export default function NavBar() {
+export default function NavBar({ loginFunction } : NavBarI) {
 
     const location = useLocation()
 
@@ -32,7 +35,7 @@ export default function NavBar() {
                         </Typography>
                     </Grid>
                     <Grid container display={location.pathname === `/singup` ? `none` : `flex`} width={`auto`}>
-                        <Typography fontWeight={ThemeSettings.THEME_FONT_WEIGHTS.regular} color={ThemeSettings.THEME_COLORS.primary} sx={{ opacity: .9, '&:hover': { opacity: 1 }, cursor: `pointer` }}>
+                        <Typography onClick={() => loginFunction && loginFunction()} fontWeight={ThemeSettings.THEME_FONT_WEIGHTS.regular} color={ThemeSettings.THEME_COLORS.primary} sx={{ opacity: .9, '&:hover': { opacity: 1 }, cursor: `pointer` }}>
                             Entrar
                         </Typography>
                     </Grid>
@@ -42,7 +45,7 @@ export default function NavBar() {
                         </Typography>
                     </Grid>
                     <Grid container width={`auto`}>
-                        <Button datatype="secondary" variant="contained">
+                        <Button datatype="secondary" variant="contained" onClick={() => location.pathname === `/singup` && loginFunction ? loginFunction() : () => {}}>
                             {location.pathname === `/singup` ? `Entrar` : `Criar conta`}
                         </Button>
                     </Grid>
