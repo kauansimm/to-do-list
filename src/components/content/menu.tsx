@@ -6,12 +6,33 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import EventIcon from '@mui/icons-material/Event';
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useState } from "react";
+import NewMovie from "./new-movie";
 
-export default function Menu() {
+interface MenuProps {
+    adicionarFilme: (novoFilme: Omit<Filme, 'id'>) => Promise<void>;
+}
+
+interface Filme {
+    albumId: number;
+    id: number;
+    title: string;
+    url: string;
+    thumbnailUrl: string;
+}
+
+export default function Menu({ adicionarFilme }: MenuProps) {
+
+    const [showNewTask, setShowNewTask] = useState(false);
+
+    const handleToggleNewTask = () => {
+        setShowNewTask((prev) => !prev);
+    };
 
     return (
         <Grid container xs={3} position={`fixed`} justifyContent={`center`} height={`93vh`} paddingY={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall, xl: ThemeSettings.THEME_SPACING.verySmall }} bgcolor={`#F2F2F2`} borderRadius={`20px`}>
-            <Grid container xs={11} alignContent={`space-between`} >
+            {showNewTask && <NewMovie onClose={handleToggleNewTask} adicionarFilme={adicionarFilme} />}
+            <Grid container display={showNewTask ? `none`: `flex`} xs={11} alignContent={`space-between`} >
                 <Grid container gap={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall, xl: ThemeSettings.THEME_SPACING.verySmall - 1 }}>
                     <Grid container alignContent={`center`} justifyContent={`space-between`}>
                         <Grid container xs>
@@ -68,7 +89,7 @@ export default function Menu() {
                     <Grid container alignContent={`center`} >
                         <Grid container>
                             <Typography fontWeight={ThemeSettings.THEME_FONT_WEIGHTS.medium}>
-                                Tarefas
+                                Lista
                             </Typography>
                         </Grid>
                         <Grid container>
@@ -78,7 +99,7 @@ export default function Menu() {
                                 </Grid>
                                 <Grid container xs={10} alignContent={`center`}>
                                     <Typography>
-                                        Pendentes
+                                        Para assistir
                                     </Typography>
                                 </Grid>
                                 <Grid container xs justifyContent={`center`} bgcolor={ThemeSettings.THEME_COLORS.gray} borderRadius={`5px`}>
@@ -93,7 +114,7 @@ export default function Menu() {
                                 </Grid>
                                 <Grid container xs={10} alignContent={`center`}>
                                     <Typography>
-                                        Hoje
+                                        Filmes assistidos
                                     </Typography>
                                 </Grid>
                                 <Grid container xs justifyContent={`center`} bgcolor={ThemeSettings.THEME_COLORS.gray} borderRadius={`5px`}>
@@ -102,23 +123,16 @@ export default function Menu() {
                                     </Typography>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid container alignContent={`center`} >
-                        <Grid container>
-                            <Typography fontWeight={ThemeSettings.THEME_FONT_WEIGHTS.medium}>
-                                Lista
-                            </Typography>
-                        </Grid>
-                        <Grid container>
-                            <Grid container alignItems={`center`} padding={`.5vw`} borderRadius={`10px`} sx={{ '&:hover': { backgroundColor: ThemeSettings.THEME_COLORS.gray }, transition: `.3s`, cursor: `pointer` }}>
-                                <Grid container xs>
-                                    <AddIcon />
-                                </Grid>
-                                <Grid container xs={11} alignContent={`center`}>
-                                    <Typography>
-                                        Adicionar nova lista
-                                    </Typography>
+                            <Grid container>
+                                <Grid container alignItems={`center`} onClick={handleToggleNewTask} padding={`.5vw`} borderRadius={`10px`} sx={{ '&:hover': { backgroundColor: ThemeSettings.THEME_COLORS.gray }, transition: `.3s`, cursor: `pointer` }}>
+                                    <Grid container xs>
+                                        <AddIcon />
+                                    </Grid>
+                                    <Grid container xs={11} alignContent={`center`}>
+                                        <Typography>
+                                            Adicionar novo filme
+                                        </Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -126,28 +140,28 @@ export default function Menu() {
                     <Grid container alignContent={`center`} >
                         <Grid container>
                             <Typography fontWeight={ThemeSettings.THEME_FONT_WEIGHTS.medium}>
-                                Tags
+                                Categorias
                             </Typography>
                         </Grid>
                         <Grid container gap={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall }}>
                             <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} bgcolor={`red`} borderRadius={`5px`} sx={{ cursor: `pointer` }}>
                                 <Grid container xs={11} alignContent={`center`} justifyContent={`center`}>
                                     <Typography>
-                                        Tag 1
+                                        HBO Max
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} bgcolor={`blue`} borderRadius={`5px`} sx={{ cursor: `pointer` }}>
                                 <Grid container xs={11} alignContent={`center`} justifyContent={`center`}>
                                     <Typography>
-                                        Tag 1
+                                        Netflix
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} bgcolor={`yellow`} borderRadius={`5px`} sx={{ cursor: `pointer` }}>
                                 <Grid container xs={11} alignContent={`center`} justifyContent={`center`}>
                                     <Typography>
-                                        Tag 1
+                                        Prime
                                     </Typography>
                                 </Grid>
                             </Grid>

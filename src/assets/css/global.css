@@ -6,3 +6,10 @@
 body {
     background-color: #fffff7;
 }
+
+.github-picker > div {
+    right: auto !important;
+    left: -15px !important;
+    top: 10px !important;
+    transform: rotate(270deg) !important;
+}

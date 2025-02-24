@@ -69,7 +69,7 @@ export default function Page() {
                         </Grid>
                     </Grid>
                     <Grid container width={`auto`} className="text-animation-home">
-                        <Button variant="contained" onClick={() => handleNavigationClick(`/singup`)}>
+                        <Button variant="contained" onClick={() => handleNavigationClick(`/todolist`)}>
                             Começar
                         </Button>
                     </Grid>
