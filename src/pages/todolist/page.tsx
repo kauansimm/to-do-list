@@ -1,19 +1,15 @@
 import { Grid, Typography } from "@mui/material";
 import Menu from "../../components/content/menu";
 import ThemeSettings from "../../themes/themeSettings";
-// import Task from "../../components/content/movie";
-// import { useEffect, useState } from "react";
-// import useFetch from "../../hooks/useFecth";
-// import NewTask from "../../components/content/new-movie";
 import Movie from "../../components/content/movie";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import useCatalogo from "../../hooks/useFecth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
 
-    const { catalogo, adicionarFilme } = useCatalogo();
+    const { catalogo, adicionarFilme, removerFilme  } = useCatalogo();
 
     useGSAP(() => {
         gsap.to(".menu-animation-todolist", {
@@ -39,17 +35,12 @@ export default function Page() {
         });
     });
 
+    const [filmes, setFilmes] = useState(catalogo);
+
+
     useEffect(() => {
-        function tamanhoEmBytes(objeto : object) {
-            const str = JSON.stringify(objeto);
-            const bytes = new TextEncoder().encode(str).length;
-            return bytes;
-          }
-          
-          const catalogo1 = catalogo
-          const tamanho = tamanhoEmBytes(catalogo1);
-          console.log(`Tamanho do array serializado: ${tamanho} bytes`);
-    }, [])
+        setFilmes(catalogo);
+    }, [catalogo]);
 
     return (
         <Grid container overflow={`hidden`} paddingY={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall, xl: ThemeSettings.THEME_SPACING.verySmall }}>
@@ -63,9 +54,9 @@ export default function Page() {
                     </Typography>
                 </Grid>
                 <Grid container justifyContent={`space-between`} rowGap={{ xs: ThemeSettings.THEME_SPACING.extraSmall, sm: ThemeSettings.THEME_SPACING.verySmall }}>
-                    {(catalogo.slice(0, 40) ?? []).map((movie) => (
+                    {(filmes.slice(0, 40) ?? []).map((movie) => (
                         <Grid container key={movie.id} xs={3.8} position={`relative`} className={`animation-tasks-todolist`} >
-                            <Movie url={movie.url} thumbnailUrl={movie.thumbnailUrl} title={movie.title} />
+                            <Movie id={movie.id} url={movie.url}  removerFilme={removerFilme} thumbnailUrl={movie.thumbnailUrl} title={movie.title} />
                         </Grid>
                     ))}
                 </Grid>

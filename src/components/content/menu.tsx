@@ -1,4 +1,4 @@
-import { Grid, InputAdornment, TextField, Typography } from "@mui/material";
+import { Grid, InputAdornment, Link, TextField, Typography } from "@mui/material";
 import ThemeSettings from "../../themes/themeSettings";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,6 +8,10 @@ import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from "react";
 import NewMovie from "./new-movie";
+import netflix from '../../assets/img/logo/netflix.png'
+import hbo from '../../assets/img/logo/hbo.png'
+import prime from '../../assets/img/logo/prime.png'
+import useHandleNavigation from "../../hooks/useHandleNavigation";
 
 interface MenuProps {
     adicionarFilme: (novoFilme: Omit<Filme, 'id'>) => Promise<void>;
@@ -24,6 +28,7 @@ interface Filme {
 export default function Menu({ adicionarFilme }: MenuProps) {
 
     const [showNewTask, setShowNewTask] = useState(false);
+    const { handleNavigationClick } = useHandleNavigation()
 
     const handleToggleNewTask = () => {
         setShowNewTask((prev) => !prev);
@@ -32,7 +37,7 @@ export default function Menu({ adicionarFilme }: MenuProps) {
     return (
         <Grid container xs={3} position={`fixed`} justifyContent={`center`} height={`93vh`} paddingY={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall, xl: ThemeSettings.THEME_SPACING.verySmall }} bgcolor={`#F2F2F2`} borderRadius={`20px`}>
             {showNewTask && <NewMovie onClose={handleToggleNewTask} adicionarFilme={adicionarFilme} />}
-            <Grid container display={showNewTask ? `none`: `flex`} xs={11} alignContent={`space-between`} >
+            <Grid container display={showNewTask ? `none` : `flex`} xs={11} alignContent={`space-between`} >
                 <Grid container gap={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall, xl: ThemeSettings.THEME_SPACING.verySmall - 1 }}>
                     <Grid container alignContent={`center`} justifyContent={`space-between`}>
                         <Grid container xs>
@@ -140,30 +145,24 @@ export default function Menu({ adicionarFilme }: MenuProps) {
                     <Grid container alignContent={`center`} >
                         <Grid container>
                             <Typography fontWeight={ThemeSettings.THEME_FONT_WEIGHTS.medium}>
-                                Categorias
+                                Streaming
                             </Typography>
                         </Grid>
                         <Grid container gap={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall }}>
-                            <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} bgcolor={`red`} borderRadius={`5px`} sx={{ cursor: `pointer` }}>
-                                <Grid container xs={11} alignContent={`center`} justifyContent={`center`}>
-                                    <Typography>
-                                        HBO Max
-                                    </Typography>
-                                </Grid>
+                            <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} sx={{ cursor: `pointer`, '& img': { objectFit: `cover`, width: `100%`, borderRadius: `10px` } }}>
+                                <Link target={`_blank`} href={`https://www.max.com/br/pt`}>
+                                    <img src={hbo} alt="" />
+                                </Link>
                             </Grid>
-                            <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} bgcolor={`blue`} borderRadius={`5px`} sx={{ cursor: `pointer` }}>
-                                <Grid container xs={11} alignContent={`center`} justifyContent={`center`}>
-                                    <Typography>
-                                        Netflix
-                                    </Typography>
-                                </Grid>
+                            <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} sx={{ cursor: `pointer`, '& img': { objectFit: `cover`, width: `100%`, borderRadius: `10px` } }}>
+                                <Link target={`_blank`} href={`https://www.netflix.com/br/`}>
+                                    <img src={netflix} alt="" />
+                                </Link>
                             </Grid>
-                            <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} bgcolor={`yellow`} borderRadius={`5px`} sx={{ cursor: `pointer` }}>
-                                <Grid container xs={11} alignContent={`center`} justifyContent={`center`}>
-                                    <Typography>
-                                        Prime
-                                    </Typography>
-                                </Grid>
+                            <Grid container xs alignItems={`center`} justifyContent={`center`} padding={`.5vw`} sx={{ cursor: `pointer`, '& img': { objectFit: `cover`, width: `100%`, borderRadius: `10px` } }}>
+                                <Link target={`_blank`} href={`https://www.primevideo.com/offers/nonprimehomepage/ref=dvm_pds_amz_br_dc_s_g_mkw_s2Hv03IvM-dc_pcrid_620438871494?gad_source=1&gclid=CjwKCAiAzvC9BhADEiwAEhtlN4VdBXPGClnzTtP8mmrQOCb8df7M8edxyvguj1uHgvdo2LDqwHZzzRoC9d8QAvD_BwE&mrntrk=slid__pgrid_62046161446_pgeo_1001686_x__adext__ptid_kwd-296527732991`}>
+                                    <img src={prime} alt="" />
+                                </Link>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -179,7 +178,7 @@ export default function Menu({ adicionarFilme }: MenuProps) {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid container alignItems={`center`} padding={`.5vw`} borderRadius={`5px`} sx={{ '&:hover': { backgroundColor: ThemeSettings.THEME_COLORS.gray }, transition: `.3s`, cursor: `pointer` }}>
+                    <Grid container onClick={() => handleNavigationClick(`/home`)} alignItems={`center`} padding={`.5vw`} borderRadius={`5px`} sx={{ '&:hover': { backgroundColor: ThemeSettings.THEME_COLORS.gray }, transition: `.3s`, cursor: `pointer` }}>
                         <Grid container xs>
                             <LogoutIcon />
                         </Grid>

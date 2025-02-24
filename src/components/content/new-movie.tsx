@@ -1,7 +1,6 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import ThemeSettings from "../../themes/themeSettings";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import useCatalogo from "../../hooks/useFecth";
 import { useState } from "react";
 
 interface NewMovieProps {
@@ -22,10 +21,11 @@ export default function NewMovie({ onClose, adicionarFilme }: NewMovieProps) {
     const [title, setTitle] = useState("");
     const [url, setUrl] = useState("");
     const [thumbnailUrl, setThumbnailUrl] = useState("");
+    const [ error, setError ] = useState<string | null>(null)
 
     const handleSubmit = async () => {
         if (!title || !url || !thumbnailUrl) {
-            alert("Por favor, preencha todos os campos!");
+            setError("Preencha todos os campos!")
             return;
         }
 
@@ -38,8 +38,9 @@ export default function NewMovie({ onClose, adicionarFilme }: NewMovieProps) {
 
         console.log("Novo filme:", novoFilme);
 
-        await adicionarFilme(novoFilme); // Adiciona ao catálogo
+        await adicionarFilme(novoFilme);
 
+        setError(null)
         setTitle("");
         setUrl("");
         setThumbnailUrl("");
@@ -93,6 +94,11 @@ export default function NewMovie({ onClose, adicionarFilme }: NewMovieProps) {
                 <Button variant={`contained`} sx={{ width: `100%` }} onClick={handleSubmit}>
                     Adicionar Filme
                 </Button>
+            </Grid>
+            <Grid container display={error !== null ? `flex` : `none`}>
+                <Typography color="#ff0000" component={`strong`}>
+                    {error}
+                </Typography>
             </Grid>
         </Grid>
     )
