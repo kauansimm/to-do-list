@@ -7,12 +7,14 @@ import EditIcon from '@mui/icons-material/Edit';
 interface MovieProps {
     thumbnailUrl: string;
     title: string;
-    url: string,
-    id: number
+    url: string;
+    id: number;
     removerFilme: (id: number) => Promise<void>;
+    openMenuEditMovie: (movie: { id: number; thumbnailUrl: string; url: string; title: string }) => void;
 }
 
-export default function Movie({ thumbnailUrl, title, url, id, removerFilme }: MovieProps) {
+
+export default function Movie({ thumbnailUrl, title, url, id, removerFilme, openMenuEditMovie }: MovieProps) {
 
     const [imageError, setImageError] = useState(false);
     const [isEnter, setIsEnter] = useState(false)
@@ -47,7 +49,16 @@ export default function Movie({ thumbnailUrl, title, url, id, removerFilme }: Mo
             </Grid>
 
             <Grid container width={`auto`} position={`absolute`} zIndex={1} right={`5%`} bottom={isEnter ? `5%` : `-100%`} sx={{ transition: `.4s` }}>
-                <EditIcon sx={{ width: `2vw`, height: `2vw`, '&:hover': { color: `#DDFDC0` }, cursor: `pointer`, transition: `.3s`, color: ThemeSettings.THEME_COLORS.white }} />
+                <EditIcon
+                    onClick={() => openMenuEditMovie({
+                        id,
+                        thumbnailUrl,
+                        url,
+                        title
+                    })}
+                    sx={{ width: "2vw", height: "2vw", '&:hover': { color: "#DDFDC0" }, cursor: "pointer", transition: ".3s", color: ThemeSettings.THEME_COLORS.white }}
+                />
+
                 <DeleteIcon onClick={handleDelete} sx={{ width: `2vw`, height: `2vw`, '&:hover': { color: `#FD5361` }, cursor: `pointer`, transition: `.3s`, color: ThemeSettings.THEME_COLORS.white }} />
             </Grid>
 

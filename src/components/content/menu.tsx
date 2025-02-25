@@ -12,10 +12,24 @@ import netflix from '../../assets/img/logo/netflix.png'
 import hbo from '../../assets/img/logo/hbo.png'
 import prime from '../../assets/img/logo/prime.png'
 import useHandleNavigation from "../../hooks/useHandleNavigation";
+import EditMovie from "./edit-movie";
 
+type ObjType = {
+    id: number,
+    thumbUrl: string,
+    url: string,
+    title: string
+}
 interface MenuProps {
     adicionarFilme: (novoFilme: Omit<Filme, 'id'>) => Promise<void>;
-}
+    editarFilme: (id: number, filmeAtualizado: Partial<Omit<Filme, "id">>) => Promise<void>;
+    closeEditMovie: () => void;
+    showEditMovie: boolean;
+    obj: ObjType | null;
+    array: ObjType[];
+  }
+  
+  
 
 interface Filme {
     albumId: number;
@@ -25,7 +39,7 @@ interface Filme {
     thumbnailUrl: string;
 }
 
-export default function Menu({ adicionarFilme }: MenuProps) {
+export default function Menu({ adicionarFilme, closeEditMovie, showEditMovie, obj, editarFilme }: MenuProps) {
 
     const [showNewTask, setShowNewTask] = useState(false);
     const { handleNavigationClick } = useHandleNavigation()
@@ -37,7 +51,8 @@ export default function Menu({ adicionarFilme }: MenuProps) {
     return (
         <Grid container xs={3} position={`fixed`} justifyContent={`center`} height={`93vh`} paddingY={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall, xl: ThemeSettings.THEME_SPACING.verySmall }} bgcolor={`#F2F2F2`} borderRadius={`20px`}>
             {showNewTask && <NewMovie onClose={handleToggleNewTask} adicionarFilme={adicionarFilme} />}
-            <Grid container display={showNewTask ? `none` : `flex`} xs={11} alignContent={`space-between`} >
+            {showEditMovie && <EditMovie obj={obj} onClose={closeEditMovie} editarFilme={editarFilme} />}
+            <Grid container display={showNewTask || showEditMovie ? `none` : `flex`} xs={11} alignContent={`space-between`} >
                 <Grid container gap={{ xs: ThemeSettings.THEME_SPACING.mini, sm: ThemeSettings.THEME_SPACING.extraSmall, xl: ThemeSettings.THEME_SPACING.verySmall - 1 }}>
                     <Grid container alignContent={`center`} justifyContent={`space-between`}>
                         <Grid container xs>
